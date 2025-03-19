@@ -1,6 +1,9 @@
 const express = require("express");
-const { getDigimons, getDigimonById } = require("./dynamo");
+const { getDigimons, getDigimonById, addOrUpdateDigimon, deleteDigimon } = require("./dynamo");
 const app = express();
+
+app.use(express.json());
+
 app.get("/", (req, res) => {
 	res.send("Hello World");
 });
@@ -19,7 +22,7 @@ app.get("/digimons", async (req, res) => {
 
 app.get("/digimons/:id", async (req, res) => {
 	const id = req.params.id;
-    try {
+	try {
 		const digimon = await getDigimonById(id);
 		res.json(digimon);
 	} catch (error) {
@@ -28,6 +31,49 @@ app.get("/digimons/:id", async (req, res) => {
 			error: "Something went wrong: " + error.message,
 		});
 	}
+});
+
+app.post("/digimons", async (req, res) => {
+	const digimon = req.body;
+	try {
+		const newDigimon = await addOrUpdateDigimon(digimon);
+		res.json(newDigimon);
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({
+			error: "Something went wrong: " + error.message,
+		});
+	}
+});
+
+app.put("/digimons/:id", async (req, res) => {
+	const digimon = req.body;
+	const id = req.params.id;
+
+	digimon.id = id;
+
+	try {
+		const updatedDigimon = await addOrUpdateDigimon(digimon);
+		res.json(updatedDigimon);
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({
+			error: "Something went wrong: " + error.message,
+		});
+	}
+});
+
+app.delete("/digimons/:id", async (req, res) => {
+    const id = req.params.id;
+    try {
+        const deletedDigimon = await deleteDigimon(id);
+        res.json(deletedDigimon);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            error: "Something went wrong: " + error.message,
+        });
+    }
 });
 
 const port = process.env.PORT || 3000;
