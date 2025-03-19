@@ -1,7 +1,7 @@
 # Digimon API
 
 ## Overview
-Digimon API is a simple Node.js-based REST API that interacts with an AWS DynamoDB database. It provides endpoints to fetch, add, update, and delete Digimon data. This project is designed to help developers get accustomed to working with DynamoDB while building a lightweight API.
+Digimon API is a simple Node.js-based REST API that interacts with an AWS DynamoDB database. It provides endpoints to fetch, add, update, and delete Digimon data. This project is designed to help the developer get accustomed to working with DynamoDB while building a lightweight API.
 
 ## Features
 - Retrieve a list of Digimons from DynamoDB
