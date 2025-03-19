@@ -5,7 +5,7 @@ const app = express();
 app.use(express.json());
 
 app.get("/", (req, res) => {
-	res.send("Hello World");
+	res.send("Welcome to the Digimon API");
 });
 
 app.get("/digimons", async (req, res) => {
